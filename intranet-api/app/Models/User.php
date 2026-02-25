@@ -17,13 +17,17 @@ class User extends Authenticatable
 
     protected $fillable = [
         'documento',
+        'tipo_documento',
         'nombres',
         'apellidos',
+        'fecha_nacimiento',
+        'id_sexo',
         'email',
         'password',
         'telefono',
         'direccion',
         'estado',
+        'es_activo',
     ];
 
     protected $hidden = ['password'];

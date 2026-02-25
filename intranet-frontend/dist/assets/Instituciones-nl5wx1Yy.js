@@ -1,0 +1,1 @@
+import{D as t}from"./DynamicCrudModule-DCtEZ-tM.js";import{h as e,o}from"./index-DlKmiQXQ.js";const i={__name:"Instituciones",setup(n){return(r,s)=>(o(),e(t,{entity:"instituciones"}))}};export{i as default};

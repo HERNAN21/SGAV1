@@ -1,0 +1,1 @@
+import{D as o}from"./DynamicCrudModule-DCtEZ-tM.js";import{h as r,o as a}from"./index-DlKmiQXQ.js";const n={__name:"Usuarios",setup(e){return(s,t)=>(a(),r(o,{entity:"usuarios"}))}};export{n as default};

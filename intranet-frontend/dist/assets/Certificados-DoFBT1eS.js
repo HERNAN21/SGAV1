@@ -1,1 +1,0 @@
-import{_ as e,c,o}from"./index-KQn30iXK.js";const r={};function t(n,s){return o(),c("h2",null,"Certificados")}const _=e(r,[["render",t]]);export{_ as default};

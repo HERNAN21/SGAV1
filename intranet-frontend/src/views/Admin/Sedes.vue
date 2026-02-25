@@ -1,1 +1,7 @@
-<template><h2>Gestión de Sedes</h2></template>
+<template>
+	<DynamicCrudModule entity="sedes" />
+</template>
+
+<script setup>
+import DynamicCrudModule from '../../components/dynamic/DynamicCrudModule.vue'
+</script>

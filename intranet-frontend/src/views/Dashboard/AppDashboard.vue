@@ -18,7 +18,7 @@
         <el-option
           v-for="role in availableRoles"
           :key="role"
-          :label="role"
+          :label="getRoleLabel(role)"
           :value="role"
         />
       </el-select>
@@ -42,6 +42,7 @@ import { RouterView, useRoute, useRouter } from 'vue-router'
 import RoleDashboardLayout from '../../components/layout/RoleDashboardLayout.vue'
 import { useAuthStore } from '../../stores/authStore'
 import dashboardModules from '../../config/dashboardModules'
+import { getRoleLabel, hasAnyRole, rolesMatch } from '../../utils/roles'
 
 const roleFilterKey = 'dashboard_role_filter'
 const allRolesKey = '__ALL__'
@@ -57,8 +58,8 @@ const availableRoles = computed(() => {
 })
 
 const roleBadge = computed(() => {
-  if (selectedRole.value === allRolesKey) return authStore.user?.rol_principal || 'Usuario'
-  return selectedRole.value
+  if (selectedRole.value === allRolesKey) return getRoleLabel(authStore.user?.rol_principal || 'Usuario')
+  return getRoleLabel(selectedRole.value)
 })
 
 const selectedRole = ref(localStorage.getItem(roleFilterKey) || allRolesKey)
@@ -69,14 +70,13 @@ watch(availableRoles, (roles) => {
     return
   }
 
-  if (selectedRole.value !== allRolesKey && !roles.includes(selectedRole.value)) {
+  if (selectedRole.value !== allRolesKey && !roles.some((role) => rolesMatch(role, selectedRole.value))) {
     selectedRole.value = allRolesKey
   }
 }, { immediate: true })
 
 const hasModuleAccess = (module, roles) => {
-  if (!module.roles || module.roles.length === 0) return true
-  return module.roles.some((role) => roles.includes(role))
+  return hasAnyRole(module.roles || [], roles)
 }
 
 const filteredByRoleModules = computed(() => {
@@ -89,7 +89,7 @@ const visibleModules = computed(() => {
 
   return filteredByRoleModules.value.filter((module) => {
     if (!module.roles || module.roles.length === 0) return true
-    return module.roles.includes(selectedRole.value)
+    return module.roles.some((role) => rolesMatch(role, selectedRole.value))
   })
 })
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Admin\InstitucionController;
 use App\Http\Controllers\Api\Admin\NotificacionController as AdminNotificacionController;
 use App\Http\Controllers\Api\Admin\SedeController;
 use App\Http\Controllers\Api\Admin\UsuarioController;
+use App\Http\Controllers\Api\Admin\DynamicFormController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Biblioteca\PrestamoController;
 use App\Http\Controllers\Api\Biblioteca\RecursoController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Api\Secretaria\DashboardController as SecretariaDashboa
 use App\Http\Controllers\Api\Secretaria\TitulacionController;
 use App\Http\Controllers\Api\Tutor\SeguimientoController;
 use App\Http\Controllers\Api\Tutor\TutoriadoController;
+use App\Http\Controllers\Api\OperacionController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('auth/login', [AuthController::class, 'login']);
@@ -50,14 +52,29 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('admin')->middleware('role:Administrador')->group(function () {
+        Route::get('formularios/schemas', [DynamicFormController::class, 'schemas']);
+        Route::get('formularios/catalogos', [DynamicFormController::class, 'catalogs']);
+
         Route::get('instituciones', [InstitucionController::class, 'index']);
         Route::post('instituciones', [InstitucionController::class, 'store']);
+        Route::put('instituciones/{id}', [InstitucionController::class, 'update']);
+        Route::delete('instituciones/{id}', [InstitucionController::class, 'destroy']);
+
         Route::get('sedes', [SedeController::class, 'index']);
         Route::post('sedes', [SedeController::class, 'store']);
+        Route::put('sedes/{id}', [SedeController::class, 'update']);
+        Route::delete('sedes/{id}', [SedeController::class, 'destroy']);
+
         Route::get('facultades', [FacultadController::class, 'index']);
         Route::post('facultades', [FacultadController::class, 'store']);
+        Route::put('facultades/{id}', [FacultadController::class, 'update']);
+        Route::delete('facultades/{id}', [FacultadController::class, 'destroy']);
+
         Route::get('usuarios', [UsuarioController::class, 'index']);
         Route::post('usuarios', [UsuarioController::class, 'store']);
+        Route::put('usuarios/{id}', [UsuarioController::class, 'update']);
+        Route::delete('usuarios/{id}', [UsuarioController::class, 'destroy']);
+
         Route::get('notificaciones', [AdminNotificacionController::class, 'index']);
         Route::post('notificaciones', [AdminNotificacionController::class, 'store']);
     });
@@ -110,5 +127,49 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('convenios', [ConvenioController::class, 'index']);
         Route::get('egresados', [EgresadoController::class, 'index']);
         Route::get('bolsa-trabajo', [BolsaTrabajoController::class, 'index']);
+    });
+
+    Route::prefix('operaciones')->group(function () {
+        Route::get('catalogos', [OperacionController::class, 'catalogs'])
+            ->middleware('role:Administrador,Director,Coordinador,Jefe de Carrera,Docente,Secretaria Académica,Tesorero');
+
+        Route::get('alumnos', [OperacionController::class, 'listarAlumnos'])
+            ->middleware('role:Administrador,Director,Secretaria Académica,Coordinador,Jefe de Carrera');
+
+        Route::get('cursos', [OperacionController::class, 'listarCursos'])
+            ->middleware('role:Administrador,Director,Secretaria Académica,Coordinador,Jefe de Carrera,Docente');
+
+        Route::post('alumnos', [OperacionController::class, 'createAlumno'])
+            ->middleware('role:Administrador,Secretaria Académica');
+
+        Route::put('alumnos/{idEstudiante}', [OperacionController::class, 'updateAlumno'])
+            ->middleware('role:Administrador,Secretaria Académica');
+
+        Route::delete('alumnos/{idEstudiante}', [OperacionController::class, 'deleteAlumno'])
+            ->middleware('role:Administrador,Secretaria Académica');
+
+        Route::post('cursos', [OperacionController::class, 'createCurso'])
+            ->middleware('role:Administrador,Coordinador,Secretaria Académica');
+
+        Route::put('cursos/{idCurso}', [OperacionController::class, 'updateCurso'])
+            ->middleware('role:Administrador,Coordinador,Secretaria Académica');
+
+        Route::delete('cursos/{idCurso}', [OperacionController::class, 'deleteCurso'])
+            ->middleware('role:Administrador,Coordinador,Secretaria Académica');
+
+        Route::post('notas', [OperacionController::class, 'registrarNota'])
+            ->middleware('role:Administrador,Docente');
+
+        Route::post('pagos', [OperacionController::class, 'registrarPago'])
+            ->middleware('role:Administrador,Tesorero');
+
+        Route::get('reportes', [OperacionController::class, 'reportes'])
+            ->middleware('role:Administrador,Director,Coordinador,Jefe de Carrera,Secretaria Académica,Tesorero');
+
+        Route::get('matriz-permisos', [OperacionController::class, 'matrizPermisos'])
+            ->middleware('role:Administrador,Director,Coordinador,Jefe de Carrera,Secretaria Académica,Tesorero');
+
+        Route::put('matriz-permisos/{idRol}', [OperacionController::class, 'actualizarPermisosRol'])
+            ->middleware('role:Administrador');
     });
 });

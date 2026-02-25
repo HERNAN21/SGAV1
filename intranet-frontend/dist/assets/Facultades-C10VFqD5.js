@@ -1,0 +1,1 @@
+import{D as a}from"./DynamicCrudModule-DCtEZ-tM.js";import{h as e,o as t}from"./index-DlKmiQXQ.js";const u={__name:"Facultades",setup(o){return(r,c)=>(t(),e(a,{entity:"facultades"}))}};export{u as default};

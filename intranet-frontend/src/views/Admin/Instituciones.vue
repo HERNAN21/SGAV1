@@ -1,1 +1,7 @@
-<template><h2>Gestión de Instituciones</h2></template>
+<template>
+	<DynamicCrudModule entity="instituciones" />
+</template>
+
+<script setup>
+import DynamicCrudModule from '../../components/dynamic/DynamicCrudModule.vue'
+</script>
