@@ -1,0 +1,1 @@
+<template><h2>Pagos y Boletas</h2></template>

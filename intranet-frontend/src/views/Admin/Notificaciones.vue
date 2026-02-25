@@ -1,0 +1,1 @@
+<template><h2>Gestión de Notificaciones</h2></template>

@@ -1,0 +1,1 @@
+<template><h2>Gestión de Sedes</h2></template>

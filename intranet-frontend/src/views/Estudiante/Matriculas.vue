@@ -1,0 +1,1 @@
+<template><h2>Mis Matrículas</h2></template>

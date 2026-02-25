@@ -1,0 +1,1 @@
+<template><h2>Becas</h2></template>

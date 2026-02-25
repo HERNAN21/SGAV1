@@ -1,0 +1,1 @@
+<template><h2>Bolsa de Trabajo</h2></template>

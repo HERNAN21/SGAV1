@@ -1,0 +1,1 @@
+<template><h2>Egresados</h2></template>

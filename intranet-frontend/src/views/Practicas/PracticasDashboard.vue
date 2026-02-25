@@ -1,0 +1,1 @@
+<template><h2>Dashboard Prácticas</h2></template>

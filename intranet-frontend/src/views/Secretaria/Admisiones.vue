@@ -1,0 +1,1 @@
+<template><h2>Admisiones</h2></template>

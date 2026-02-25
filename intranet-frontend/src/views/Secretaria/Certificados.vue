@@ -1,0 +1,1 @@
+<template><h2>Certificados</h2></template>

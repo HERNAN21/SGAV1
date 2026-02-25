@@ -1,0 +1,1 @@
+<template><h2>Seguimiento</h2></template>

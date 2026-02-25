@@ -1,0 +1,1 @@
+<template><h2>Gestión de Instituciones</h2></template>

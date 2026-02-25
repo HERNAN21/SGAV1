@@ -1,0 +1,1 @@
+<template><h2>Dashboard Finanzas</h2></template>

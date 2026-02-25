@@ -1,0 +1,1 @@
+<template><h2>Dashboard Administrador</h2></template>

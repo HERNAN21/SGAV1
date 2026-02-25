@@ -1,0 +1,1 @@
+<template><h2>Titulaciones</h2></template>
