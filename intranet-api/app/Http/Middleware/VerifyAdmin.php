@@ -12,7 +12,7 @@ class VerifyAdmin
     {
         $user = $request->user();
 
-        if (!$user || !$user->hasRole('Administrador')) {
+        if (!$user || !$user->hasAnyRoleCatalogo(['Administrador'])) {
             return response()->json(['message' => 'Solo administrador'], 403);
         }
 

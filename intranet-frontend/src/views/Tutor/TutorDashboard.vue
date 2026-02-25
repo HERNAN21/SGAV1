@@ -1,1 +1,0 @@
-<template><h2>Dashboard Tutor</h2></template>

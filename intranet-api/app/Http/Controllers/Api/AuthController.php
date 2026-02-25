@@ -20,11 +20,20 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+
+        if (!$user->estado || !$user->es_activo) {
+            return response()->json(['message' => 'Usuario inactivo'], 403);
+        }
+
         $token = $user->createToken('spa-token')->plainTextToken;
 
         return response()->json([
             'token' => $token,
-            'user' => $user,
+            'user' => [
+                ...$user->toArray(),
+                'roles' => $user->rolesCatalogo()->pluck('nombre')->values(),
+                'rol_principal' => $user->primary_role,
+            ],
         ]);
     }
 
@@ -37,6 +46,12 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return response()->json($request->user());
+        $user = $request->user();
+
+        return response()->json([
+            ...$user->toArray(),
+            'roles' => $user->rolesCatalogo()->pluck('nombre')->values(),
+            'rol_principal' => $user->primary_role,
+        ]);
     }
 }

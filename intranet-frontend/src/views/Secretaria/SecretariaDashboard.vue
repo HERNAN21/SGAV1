@@ -1,1 +1,0 @@
-<template><h2>Dashboard Secretaría</h2></template>

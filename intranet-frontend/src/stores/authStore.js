@@ -10,6 +10,11 @@ export const useAuthStore = defineStore('auth', {
       this.user = data.user
       localStorage.setItem('token', data.token)
     },
+    async fetchMe() {
+      if (!this.token) return
+      const { data } = await authService.me()
+      this.user = data
+    },
     logout() {
       this.token = null
       this.user = null

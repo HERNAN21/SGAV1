@@ -11,8 +11,19 @@ class VerifyRole
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         $user = $request->user();
+        $roles = array_values(array_filter(array_map('trim', $roles)));
 
-        if (!$user || !$user->hasAnyRole($roles)) {
+        $authorized = false;
+
+        if ($user && method_exists($user, 'hasAnyRoleCatalogo')) {
+            $authorized = $user->hasAnyRoleCatalogo($roles);
+        }
+
+        if (!$authorized && $user && method_exists($user, 'hasAnyRole')) {
+            $authorized = $user->hasAnyRole($roles);
+        }
+
+        if (!$user || !$authorized) {
             return response()->json(['message' => 'No autorizado por rol'], 403);
         }
 

@@ -1,1 +1,0 @@
-<template><h2>Dashboard Estudiante</h2></template>

@@ -1,1 +1,0 @@
-<template><h2>Dashboard Bienestar</h2></template>

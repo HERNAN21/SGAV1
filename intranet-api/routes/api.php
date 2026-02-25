@@ -79,7 +79,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('seguimiento', [SeguimientoController::class, 'index']);
     });
 
-    Route::prefix('secretaria')->middleware('role:Secretaria')->group(function () {
+    Route::prefix('secretaria')->middleware('role:Secretaria Académica')->group(function () {
         Route::get('dashboard', [SecretariaDashboardController::class, 'index']);
         Route::get('actas', [ActaController::class, 'index']);
         Route::get('certificados', [CertificadoController::class, 'index']);
@@ -87,25 +87,25 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('admisiones', [AdmisionController::class, 'index']);
     });
 
-    Route::prefix('finanzas')->middleware('role:Finanzas')->group(function () {
+    Route::prefix('finanzas')->middleware('role:Tesorero')->group(function () {
         Route::get('pagos', [PagoController::class, 'index']);
         Route::get('becas', [BecaController::class, 'index']);
         Route::get('reportes', [ReporteController::class, 'index']);
     });
 
-    Route::prefix('biblioteca')->middleware('role:Biblioteca')->group(function () {
+    Route::prefix('biblioteca')->middleware('role:Bibliotecario')->group(function () {
         Route::get('recursos', [RecursoController::class, 'index']);
         Route::get('prestamos', [PrestamoController::class, 'index']);
         Route::get('reservas', [ReservaController::class, 'index']);
     });
 
-    Route::prefix('bienestar')->middleware('role:Bienestar')->group(function () {
+    Route::prefix('bienestar')->middleware('role:Tutor,Personal Administrativo')->group(function () {
         Route::get('psicologia', [PsicologiaController::class, 'index']);
         Route::get('actividades', [ActividadController::class, 'index']);
         Route::get('servicios', [ServicioController::class, 'index']);
     });
 
-    Route::prefix('practicas')->middleware('role:Practicas')->group(function () {
+    Route::prefix('practicas')->middleware('role:Coordinador,Jefe de Carrera')->group(function () {
         Route::get('empresas', [EmpresaController::class, 'index']);
         Route::get('convenios', [ConvenioController::class, 'index']);
         Route::get('egresados', [EgresadoController::class, 'index']);

@@ -1,0 +1,140 @@
+{
+  "info": {
+    "name": "SGAV1 API - Colección Única",
+    "description": "Colección única con carpetas por módulo para SGAV1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000/api" },
+    { "key": "token", "value": "" },
+    { "key": "admin_email", "value": "admin@uninp.edu.pe" },
+    { "key": "admin_password", "value": "123456" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}"
+            },
+            "url": "{{base_url}}/auth/login"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) { pm.collectionVariables.set('token', json.token); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{base_url}}/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{base_url}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        { "name": "Instituciones (GET)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/admin/instituciones" } },
+        { "name": "Instituciones (POST)", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Nueva Institución\"\n}" }, "url": "{{base_url}}/admin/instituciones" } },
+        { "name": "Sedes (GET)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/admin/sedes" } },
+        { "name": "Sedes (POST)", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Sede Central\"\n}" }, "url": "{{base_url}}/admin/sedes" } },
+        { "name": "Facultades (GET)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/admin/facultades" } },
+        { "name": "Facultades (POST)", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Facultad de Ingeniería\"\n}" }, "url": "{{base_url}}/admin/facultades" } },
+        { "name": "Usuarios (GET)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/admin/usuarios" } },
+        { "name": "Usuarios (POST)", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombres\": \"Nuevo\",\n  \"apellidos\": \"Usuario\"\n}" }, "url": "{{base_url}}/admin/usuarios" } },
+        { "name": "Notificaciones (GET)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/admin/notificaciones" } },
+        { "name": "Notificaciones (POST)", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"titulo\": \"Aviso\",\n  \"mensaje\": \"Mensaje prueba\"\n}" }, "url": "{{base_url}}/admin/notificaciones" } }
+      ]
+    },
+    {
+      "name": "Docente",
+      "item": [
+        { "name": "Cursos", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/docente/cursos" } },
+        { "name": "Calificaciones", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"id_curso\": 1,\n  \"detalle\": []\n}" }, "url": "{{base_url}}/docente/calificaciones" } },
+        { "name": "Asistencia", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"id_curso\": 1,\n  \"detalle\": []\n}" }, "url": "{{base_url}}/docente/asistencia" } }
+      ]
+    },
+    {
+      "name": "Estudiante",
+      "item": [
+        { "name": "Matrículas", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/estudiante/matriculas" } },
+        { "name": "Notas", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/estudiante/notas" } },
+        { "name": "Horario", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/estudiante/horario" } }
+      ]
+    },
+    {
+      "name": "Tutor",
+      "item": [
+        { "name": "Tutorados", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/tutor/tutoriados" } },
+        { "name": "Seguimiento", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/tutor/seguimiento" } }
+      ]
+    },
+    {
+      "name": "Secretaria",
+      "item": [
+        { "name": "Dashboard", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/secretaria/dashboard" } },
+        { "name": "Actas", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/secretaria/actas" } },
+        { "name": "Certificados", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/secretaria/certificados" } },
+        { "name": "Titulaciones", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/secretaria/titulaciones" } },
+        { "name": "Admisiones", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/secretaria/admisiones" } }
+      ]
+    },
+    {
+      "name": "Finanzas",
+      "item": [
+        { "name": "Pagos", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/finanzas/pagos" } },
+        { "name": "Becas", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/finanzas/becas" } },
+        { "name": "Reportes", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/finanzas/reportes" } }
+      ]
+    },
+    {
+      "name": "Biblioteca",
+      "item": [
+        { "name": "Recursos", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/biblioteca/recursos" } },
+        { "name": "Préstamos", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/biblioteca/prestamos" } },
+        { "name": "Reservas", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/biblioteca/reservas" } }
+      ]
+    },
+    {
+      "name": "Bienestar",
+      "item": [
+        { "name": "Psicología", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/bienestar/psicologia" } },
+        { "name": "Actividades", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/bienestar/actividades" } },
+        { "name": "Servicios", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/bienestar/servicios" } }
+      ]
+    },
+    {
+      "name": "Practicas",
+      "item": [
+        { "name": "Empresas", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/practicas/empresas" } },
+        { "name": "Convenios", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/practicas/convenios" } },
+        { "name": "Egresados", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/practicas/egresados" } },
+        { "name": "Bolsa Trabajo", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{base_url}}/practicas/bolsa-trabajo" } }
+      ]
+    }
+  ]
+}

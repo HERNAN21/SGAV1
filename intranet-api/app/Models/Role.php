@@ -2,8 +2,17 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Models\Role as SpatieRole;
+use Illuminate\Database\Eloquent\Model;
 
-class Role extends SpatieRole
+class Role extends Model
 {
+	protected $table = 'cat_roles';
+	protected $primaryKey = 'id_rol';
+	public $timestamps = false;
+
+	protected $fillable = [
+		'nombre',
+		'descripcion',
+		'nivel_acceso',
+	];
 }
